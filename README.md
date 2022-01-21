@@ -53,7 +53,7 @@ My Voice - Is an Al based Video calling and chat platform for people communicati
 
 ## Authors
 
-- Suryansh Trivedi
-- Utkersh Gumphekar
 - Shivansh Pratap
+- Suryansh Trivedi
+- Utkarsh Gumphekar
 - Yogesh Patidar
