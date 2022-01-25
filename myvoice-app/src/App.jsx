@@ -15,7 +15,7 @@ function App() {
     // 3. TODO - Load network
     // e.g. const net = await cocossd.load();
 
-    const net = await tf.loadGraphModel(process.env.REACT_APP_MODEL_ADDRESS);
+    const net = await tf.loadGraphModel(import.meta.env.VITE_MODEL_ADDRESS);
 
     //  Loop and detect hands
     setInterval(() => {
