@@ -3,9 +3,12 @@ import * as wss from "./wss.js";
 import * as webRTCHandler from "./webRTCHandler.js";
 import * as constants from "./constants.js";
 
+
 //inatialization of socket io connection
 const socket = io("/");
 wss.registerSocketEvents(socket);
+webRTCHandler.getLocalPreview();
+
 
 //register event for personal code copy button
 const  personalCodeCopyButton=document.getElementById("personal_code_copy_button");
@@ -31,3 +34,5 @@ personalCodeVideoButton.addEventListener('click',()=>{
     webRTCHandler.sendPreOffer(callType,calleePersonalCode);
     
 });
+
+
