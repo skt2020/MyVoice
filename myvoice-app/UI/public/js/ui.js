@@ -17,6 +17,12 @@ export const updateLocalVideo=(stream)=>{
 
 };
 
+export const updateRemoteVideo=(stream)=>{
+    const remoteVideo= document.getElementById('remote_video');
+    remoteVideo.srcObject=stream;
+
+};
+
 export const showIncomingCallDialog =(callType,acceptCallHandler,rejectCallHandler)=>{
     const callTypeInfo = callType === constants.callType.CHAT_PERSONAL_CODE ? "Chat" : "Video";
     const incomingCallDialog=elements.getIncomingCallDialog(callTypeInfo,acceptCallHandler,rejectCallHandler);
