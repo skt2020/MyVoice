@@ -52,6 +52,17 @@ export const showCallingDialog =(rejectCallHandler)=>{
 
 }
 
+export const showNoStrangerAvailableDialog=()=>{
+    const infoDialog=elements.getInfoDialog("No Stranger Available","Please try again later.");
+    if(infoDialog){
+        const dialog=document.getElementById('dialog');
+        dialog.appendChild(infoDialog);
+        setTimeout(()=>{
+            removeAllDialogs();},[4000]);
+    }
+
+}
+
 export const removeAllDialogs=()=>{
     const dialog =document.getElementById('dialog');
     dialog.querySelectorAll("*").forEach((dialog)=>dialog.remove());
@@ -89,10 +100,10 @@ export const showInfoDialog=(preOfferAnswer)=>{
 
 
 export const showCallElements=(callType)=>{
-    if(callType===constants.callType.CHAT_PERSONAL_CODE){
+    if(callType===constants.callType.CHAT_PERSONAL_CODE || callType===constants.callType.CHAT_STRANGER){
         showChatCallElements();
     }
-    if(callType===constants.callType.VIDEO_PERSONAL_CODE){
+    if(callType===constants.callType.VIDEO_PERSONAL_CODE || callType===constants.callType.VIDEO_STRANGER){
         showVideoCallElements();
     }
 };
@@ -221,6 +232,12 @@ export const updateUIAfterHangUp = (callType)=>{
 
 };
 
+//changing status of checkbox
+export const updateStrangerCheckbox=(allowConnections)=>{
+    const checkboxCheckImg=document.getElementById("allow_strangers_checkbox_image");
+    allowConnections? showElement(checkboxCheckImg) : hideElement(checkboxCheckImg);
+
+}
 
 // UI helper functions
 
