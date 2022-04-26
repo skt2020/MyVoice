@@ -221,6 +221,9 @@ resumeRecordingButton.addEventListener("click", () => {
 
 const hangUpButton=document.getElementById('hang_up_button');
 hangUpButton.addEventListener('click',()=>{
+  const labelContainer=document.getElementById('label-container');
+    labelContainer.style.display='none';
+    store.setAiModel(false);
     webRTCHandler.handleHangUp();
 });
 
