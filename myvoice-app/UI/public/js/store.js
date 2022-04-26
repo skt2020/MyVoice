@@ -7,8 +7,15 @@ let state={
     allowConnectionsFromStrangers: false,
     screenSharingActive: false,
     callState: constants.callState.CALL_AVAILABLE_ONLY_CHAT,
+    aiModel: false,
 };
 
+export const setAiModel=(stream)=>{
+    state={
+        ...state,
+        aiModel:stream,
+    };
+};
 export const setSocketId=(socketId)=>{
     state={
         ...state,

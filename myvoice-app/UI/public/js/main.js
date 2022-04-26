@@ -5,7 +5,7 @@ import * as constants from "./constants.js";
 import * as ui from "./ui.js";
 import * as recordingUtils from "./recordingUtils.js";
 import * as strangerUtils from "./strangerUtils.js";
-
+import * as ai from "../AiModel/script.js";
 
 //inatialization of socket io connection
 const socket = io("/");
@@ -83,7 +83,90 @@ switchForScreenSharingButton.addEventListener("click", () => {
     const screenSharingActive = store.getState().screenSharingActive;
     webRTCHandler.switchBetweenCameraAndScreenSharing(screenSharingActive);
   });
+//ai model
+///////////////////////////////////////
+ // More API functions here:
+    // https://github.com/googlecreativelab/teachablemachine-community/tree/master/libraries/image
 
+    // the link to your model provided by Teachable Machine export panel
+    const URL = "../AiModel/my_model/";
+
+    let model, webcam, labelContainer, maxPredictions;
+
+    // Load the image model and setup the webcam
+   export async function init() {
+        const modelURL = URL + "model.json";
+        const metadataURL = URL + "metadata.json";
+
+        // load the model and metadata
+        // Refer to tmImage.loadFromFiles() in the API to support files from a file picker
+        // or files from your local hard drive
+        // Note: the pose library adds "tmImage" object to your window (window.tmImage)
+        model = await tmImage.load(modelURL, metadataURL);
+        maxPredictions = model.getTotalClasses();
+
+        // Convenience function to setup a webcam
+        const flip = true; // whether to flip the webcam
+        webcam = new tmImage.Webcam(0, 0, flip); // width, height, flip
+        await webcam.setup(); // request access to the webcam
+        //await webcam.play();
+        window.requestAnimationFrame(loop);
+
+        // append elements to the DOM
+        document.getElementById("webcam-container").appendChild(webcam.canvas);
+        labelContainer = document.getElementById("label-container");
+        //for (let i = 0; i < maxPredictions; i++) { // and class labels
+            labelContainer.appendChild(document.createElement("div"));
+        //}
+    }
+
+    async function loop() {
+       // webcam.update(); // update the webcam frame
+        await predict();
+        window.requestAnimationFrame(loop);
+    }
+    let remote_video=document.getElementById("remote_video");
+    // run the webcam image through the image model
+    async function predict() {
+        // predict can take in an image, video or canvas html element
+        const prediction = await model.predict(remote_video);
+        let mx=0,index=0;
+        for (let i = 0; i < maxPredictions; i++) {
+        if(prediction[i].probability>mx){
+          mx=prediction[i].probability;
+          index=i;
+        }
+      }
+           const classPrediction =
+                prediction[index].className + ": " + prediction[index].probability.toFixed(2);
+            labelContainer.childNodes[0].innerHTML = classPrediction;
+        
+    }
+
+//////////////////////////////////////
+
+//ai model
+const enableWebcamButton = document.getElementById('ai_model');
+enableWebcamButton.addEventListener('click', ()=>{
+  const modelState = store.getState().aiModel;
+  if(modelState== false)
+  {
+    const labelContainer=document.getElementById('label-container');
+    labelContainer.style.display='flex';
+    store.setAiModel(true);
+    init();
+    
+  }
+  else
+  {
+    const labelContainer=document.getElementById('label-container');
+    labelContainer.style.display='none';
+    store.setAiModel(false);
+  }
+
+});
+
+  
 // messenger
 const newMessageInput=document.getElementById('new_message_input');
 newMessageInput.addEventListener('keydown',(event)=>{

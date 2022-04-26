@@ -66,18 +66,33 @@
             <div class='call_container'>
                 <div class="videos_container">
                     <div id="video_placeholder" class="videos_placeholder">
+                      
                         <img src="./utils/images/logo.png" alt="logo"></img>
                     </div>
-                    <video class="remote_video display_none" muted autoplay id="remote_video" ></video>
+                     <!--//////////////////AI MODEL  remote stram start /////////////////////-->
+                     <div id="webcam-container">
+                        
+                        <div id="label-container" style="color: white; background-color: black; display: flex; justify-content: flex-end; font-size: large;"></div> 
+                     <video class="remote_video display_none" muted autoplay id="remote_video" >
+                        <!-- <div id="label-container" style="color: white; background-color: black; z-index: 1;display: flex; justify-content: flex-end; font-size: large;"></div> -->
+                        
+                     </video>
+                     </div>
+                    <!--  <div id="label-container" style="color: white; background-color: black; display: flex; justify-content: flex-end;"></div> -->
+                      <!--//////////////////AI MODEL  remote stram stop /////////////////////-->
                     <div class="local_video_container">
                         <video class="local_video" muted autoplay id="local_video" ></video>
                     </div>
                     <div class="call_buttons_container display_none" id="call_buttons">
+                       <!--  <div id="label-container" style="color: white; background-color: black;"></div> -->
                         <button class="call_button_small" id="mic_button">
                             <img src="./utils/images/mic.png" alt="mic" id="mic_button_image"></img>
                         </button>
                         <button class="call_button_small" id="camera_button">
                             <img src="./utils/images/camera.png" alt="camera" id="camera_button_image"></img>
+                        </button>
+                        <button class="call_button_small" id="ai_model">
+                            <img src="./utils/images/ai-hand.png" alt="AI Model"></img>
                         </button>
                         <button class="call_button_large" id="hang_up_button">
                             <img src="./utils/images/hangUp.png" alt="hangUp"></img>
@@ -97,6 +112,7 @@
 
                     </div>
                     <div class="video_recording_buttons_container display_none" id="video_recording_buttons">
+                       
                         <button id="pause_recording_button">
                             <img src="./utils/images/pause.png" alt="pause recording"></img>
                         </button>
@@ -132,5 +148,8 @@
         <script src='./js/webRTCHandler.js' type='module'></script>
         <script src='./js/strangerUtils.js' type='module'></script>
         <script src='./js/main.js' type='module'></script>
+        <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8/dist/teachablemachine-image.min.js"></script>
+        <script src="./AiModel/script.js" type='module'></script>
     </body>
 </html>
